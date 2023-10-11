@@ -251,7 +251,7 @@ def condense_helper(result_condensed, list, num):
 
 
 def driver(
-    product, currency, num=None, df_flag=0, csv=False, cd=None, ui=False, sort=None
+        product, currency, num=None, df_flag=0, csv=False, cd=None, ui=False, sort=None, isRestApi=False
 ):
     """Returns csv is the user enters the --csv arg,
     else will display the result table in the terminal based on the args entered by the user"""
@@ -261,15 +261,19 @@ def driver(
     products_3 = searchEtsy(product, df_flag, currency)
     products_4 = searchGoogleShopping(product, df_flag, currency)
     products_5 = searchBJs(product, df_flag, currency)
+
+    if isRestApi:
+        return products_1 + products_2 + products_3 + products_4 + products_5
+
     result_condensed = ""
     if not ui:
         results = products_1 + products_2 + products_3 + products_4 + products_5
         result_condensed = (
-            products_1[:num]
-            + products_2[:num]
-            + products_3[:num]
-            + products_4[:num]
-            + products_5[:num]
+                products_1[:num]
+                + products_2[:num]
+                + products_3[:num]
+                + products_4[:num]
+                + products_5[:num]
         )
         result_condensed = pd.DataFrame.from_dict(result_condensed, orient="columns")
         results = pd.DataFrame.from_dict(results, orient="columns")
