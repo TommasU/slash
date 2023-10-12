@@ -142,7 +142,7 @@ def searchEtsy(query, df_flag, currency):
             continue
         else:
             links = str
-        titles, prices = (item.select("h3")), (item.select(".currency-value"))
+        titles, prices, product_img = (item.select("h3")), (item.select(".currency-value")), (item.findAll("img", {"data-listing-card-listing-image": True}))
         ratings = item.select("span.screen-reader-only")
         num_ratings = item.select("span.wt-text-body-01")
         trending = item.select("span.wt-badge")
@@ -160,6 +160,7 @@ def searchEtsy(query, df_flag, currency):
             trending,
             df_flag,
             currency,
+            product_img
         )
         products.append(product)
     return products
