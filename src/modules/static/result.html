@@ -15,7 +15,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-
 </head>
 <body>
 
@@ -87,42 +86,44 @@
 <hr>
 
 <br>
-<div class="results">
-    <div class="col-md-4"></div>
-    <div class="col-md-4">
-        <table class="item-list" border="1">
-            <thead>
-            <tr>
-                <th colspan="6">Products</th>
-            </tr>
-            <tr>
-                <td>Timestamp</td>
-                <td>Title</td>
-                <td>Product Image</td>
-                <td>Price</td>
-                <td>Website</td>
-                <td>Rating</td>
-            </tr>
-            </thead>
-            <tbody>
-
+    <div class="container">
+        <div class="row">
             {% for product in data %}
-                <tr>
-                    <td>{{ product.timestamp }}</td>
-                    <td><a href={{ product.link }} target="_blank">{{ product.title }}</a></td>
-                    <td><img src="{{ product.image_url }}" alt="No image"></td>
-                    <td>{{ product.price }}</td>
-                    <td>{{ product.website }}</td>
-                    <td>{{ product.rating }}</td>
-                </tr>
-
+            <div class="col-md-3">
+                <div class="card mb-4 cutom-card">
+                    {% if product.website == "amazon" %}
+                    <img src="images/amazon.jpg" alt="Amazon Logo">
+                    {% elif product.website == "walmart" %}
+                    <img src="images/walmart.jpg" alt="Walmart Logo">
+                    {% elif product.website == "Etsy" %}
+                    <img src="images/Etsy.jpg" alt="Etsy Logo">
+                    {% elif product.website == "bjs" %}
+                    <img src="images/bjs.jpg" alt="BJ's Logo">
+                    {% elif product.website == "google" %}
+                    <img src="images/google.jpg" alt="Google Logo">
+                    {% elif product.website == "costco" %}
+                    <img src="images/costco.jpg" alt="Costco Logo">
+                    {% else %}
+                    <img src="default-logo.png" alt="Default Logo">
+                    {% endif %}
+                    <img class="card-img-top" src="{{ product.image_url }}" alt="No image" style="width: 250px; height: 270px;">
+                    <div class="card-body" style="height: 200px;">
+                        <a href={{ product.link }} target="_blank">{{ product.title }}</a>
+                    </div>
+                    <div class="card-body">   
+                        <p class="card-text">{{ product.price }}</p>
+                        <p class="card-text">Average rating: {{ product.rating }}</p>
+                        <p class="card-text">Fetched from: {{ product.website }}</p>
+                    </div>
+                </div>
+            </div>
+            {% if loop.index0 % 4 == 3 %} {# Check if 3, as loop.index0 starts at 0 #}
+        </div>    
+        <div class="row">
+            {% endif %}
             {% endfor %}
-
-            </tbody>
-        </table>
+        </div>
     </div>
-    <div class="col-md-4"></div>
-</div>
 
 </body>
 </html>
