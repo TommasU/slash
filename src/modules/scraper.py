@@ -58,6 +58,7 @@ def searchAmazon(query, df_flag, currency):
         ratings = res.select("span.a-icon-alt")
         num_ratings = res.select("span.a-size-base")
         trending = res.select("span.a-badge-text")
+        imageUrl = res.select(".s-image")
         if len(trending) > 0:
             trending = trending[0]
         else:
@@ -72,6 +73,7 @@ def searchAmazon(query, df_flag, currency):
             trending,
             df_flag,
             currency,
+            imageUrl
         )
         products.append(product)
     return products
@@ -91,10 +93,11 @@ def searchWalmart(query, df_flag, currency):
     products = []
     pattern = re.compile(r"out of 5 Stars")
     for res in results:
-        titles, prices, links = (
+        titles, prices, links, product_img = (
             res.select("span.lh-title"),
             res.select("div.lh-copy"),
             res.select("a"),
+            res.findAll("img", {"data-testid": "productTileImage"})
         )
         ratings = res.findAll("span", {"class": "w_DE"}, text=pattern)
         num_ratings = res.findAll("span", {"class": "sans-serif gray f7"})
@@ -113,6 +116,7 @@ def searchWalmart(query, df_flag, currency):
             trending,
             df_flag,
             currency,
+            product_img
         )
         products.append(product)
     return products
