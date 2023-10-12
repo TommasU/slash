@@ -1,0 +1,151 @@
+.item-list {
+    text-align: center;
+    margin-top: 20px;
+    padding: 20px 20px 20px 20px;
+    width: 100%;
+    display: block;
+    /* overflow: hidden; */
+
+}
+
+.container{
+    padding-top: 25px;
+    padding-left: 25px;
+}
+
+.td,th {
+    border: 1px solid;
+    padding: 7px;
+}
+
+.tr{
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+
+.navbar{
+    overflow: hidden;
+    background-color: rgb(14, 35, 22);
+    position: fixed; /* Set the navbar to fixed position */
+    top: 0; /* Position the navbar at the top of the page */
+    width: 100%; /* Full width */
+    color: azure;
+}
+
+.heading{
+    padding-left: 25px;
+}
+
+.links{
+    float: right;
+    display: block;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.item-list tr:nth-child(even){
+    background-color: rgb(232, 255, 235);
+}
+
+.row{
+    padding: 25px 25px 25px 25px;
+    display: block;
+}
+
+.dropdown-show{
+    padding: 10px;
+    width: 25%;
+}
+
+.button {
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.button1 {
+background-color: white; 
+color: black; 
+border: 2px solid #4CAF50;
+}
+
+#choice1
+{
+width: 200px;
+}
+
+.button1:hover {
+background-color: rgb(63, 155, 112);
+color: white;
+}
+
+/* ################################################################## */
+
+#header{
+    font-family:Trebuchet MS, sa ns-serif;
+    font-size:32px;
+    color:#333;
+    font-style:italic;
+    font-weight:bold;
+    text-align:center;
+    padding-right:10px;
+    padding-top:35px;
+    padding-left:10px;
+}
+  
+.container1{
+    height: 270px;
+    width: 100%;
+}
+    
+.sb-example-1 .search {
+    width: 75%;
+    position: relative;
+    display: flex;
+    padding-top:15px;
+    padding-left:380px;
+}
+    
+.sb-example-1 .searchTerm {
+    width: 100%;
+    border: 3px solid rgb(63, 155, 112);
+    border-right: none;
+    padding: 5px;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    color:  rgb(63, 155, 112);
+}
+      
+.sb-example-1 .searchTerm:focus{
+    color: green;
+}
+  
+.sb-example-1 .searchButton {
+        width: 40px;
+        height: 50px;
+        border: 1px solid rgb(63, 155, 112);
+        background: rgb(145, 228, 189);
+        text-align: center;
+        color: #fff;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+        font-size: 20px;
+}
+      
+.sb-example-1 .searchButton i{
+    color: green;
+}
+  
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 30px;
+}
