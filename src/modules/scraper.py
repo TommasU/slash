@@ -18,6 +18,8 @@ import csv
 import pandas as pd
 import os
 from datetime import datetime
+import asyncio
+import aiohttp
 
 
 def httpsGet(URL):
@@ -38,15 +40,25 @@ def httpsGet(URL):
     return BeautifulSoup(soup1.prettify(), "html.parser")
 
 
-def searchAmazon(query, df_flag, currency):
+def prepare_html_document(html_text):
+    soup = BeautifulSoup(html_text, "html.parser")
+    return BeautifulSoup(soup.prettify(), "html.parser")
+
+
+def prepare_xml_document(xml_text):
+    soup = BeautifulSoup(xml_text, "lxml")
+    return soup
+
+
+def searchAmazon(page, df_flag, currency):
     """
     The searchAmazon function scrapes amazon.com
     Parameters: query- search query for the product, df_flag- flag variable, currency- currency type entered by the user
     Returns a list of items available on Amazon.com that match the product entered by the user.
     """
-    query = formatSearchQuery(query)
-    URL = f"https://www.amazon.com/s?k={query}"
-    page = httpsGet(URL)
+    # query = formatSearchQuery(query)
+    # URL = f"https://www.amazon.com/s?k={query}"
+    # page = httpsGet(URL)
     results = page.findAll("div", {"data-component-type": "s-search-result"})
     products = []
     for res in results:
@@ -79,15 +91,15 @@ def searchAmazon(query, df_flag, currency):
     return products
 
 
-def searchWalmart(query, df_flag, currency):
+def searchWalmart(page, df_flag, currency):
     """
     The searchWalmart function scrapes walmart.com
     Parameters: query- search query for the product, df_flag- flag variable, currency- currency type entered by the user
     Returns a list of items available on walmart.com that match the product entered by the user
     """
-    query = formatSearchQuery(query)
-    URL = f"https://www.walmart.com/search?q={query}"
-    page = httpsGet(URL)
+    # query = formatSearchQuery(query)
+    # URL = f"https://www.walmart.com/search?q={query}"
+    # page = httpsGet(URL)
     results = page.findAll("div", {"data-item-id": True})
     # print(results)
     products = []
@@ -122,27 +134,28 @@ def searchWalmart(query, df_flag, currency):
     return products
 
 
-def searchEtsy(query, df_flag, currency):
+def searchEtsy(soup, df_flag, currency):
     """
     The searchEtsy function scrapes Etsy.com
     Parameters: query- search query for the product, df_flag- flag variable, currency- currency type entered by the user
     Returns a list of items available on Etsy.com that match the product entered by the user
     """
-    query = formatSearchQuery(query)
-    url = f"https://www.etsy.com/search?q={query}"
+    # query = formatSearchQuery(query)
+    # url = f"https://www.etsy.com/search?q={query}"
     products = []
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML, like Gecko) Version/9.0.2 Safari/601.3.9"
-    }
-    response = requests.get(url, headers=headers)
-    soup = BeautifulSoup(response.content, "lxml")
+    # headers = {
+    #     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML, like Gecko) Version/9.0.2 Safari/601.3.9"
+    # }
+    # response = requests.get(url, headers=headers)
+    # soup = BeautifulSoup(response.content, "lxml")
     for item in soup.select(".wt-grid__item-xs-6"):
         str = item.select("a")
         if str == []:
             continue
         else:
             links = str
-        titles, prices, product_img = (item.select("h3")), (item.select(".currency-value")), (item.findAll("img", {"data-listing-card-listing-image": True}))
+        titles, prices, product_img = (item.select("h3")), (item.select(".currency-value")), (
+            item.findAll("img", {"data-listing-card-listing-image": True}))
         ratings = item.select("span.screen-reader-only")
         num_ratings = item.select("span.wt-text-body-01")
         trending = item.select("span.wt-badge")
@@ -166,15 +179,15 @@ def searchEtsy(query, df_flag, currency):
     return products
 
 
-def searchGoogleShopping(query, df_flag, currency):
+def searchGoogleShopping(page, df_flag, currency):
     """
     The searchGoogleShopping function scrapes https://shopping.google.com/
     Parameters: query- search query for the product, df_flag- flag variable, currency- currency type entered by the user
     Returns a list of items available on walmart.com that match the product entered by the user
     """
-    query = formatSearchQuery(query)
-    URL = f"https://www.google.com/search?tbm=shop&q={query}"
-    page = httpsGet(URL)
+    # query = formatSearchQuery(query)
+    # URL = f"https://www.google.com/search?tbm=shop&q={query}"
+    # page = httpsGet(URL)
     results = page.findAll("div", {"class": "sh-dgr__grid-result"})
     products = []
     pattern = re.compile(r"[0-9]+ product reviews")
@@ -211,15 +224,15 @@ def searchGoogleShopping(query, df_flag, currency):
     return products
 
 
-def searchBJs(query, df_flag, currency):
+def searchBJs(page, df_flag, currency):
     """
     The searchBJs function scrapes https://www.bjs.com/
     Parameters: query- search query for the product, df_flag- flag variable, currency- currency type entered by the user
     Returns a list of items available on walmart.com that match the product entered by the user
     """
-    query = formatSearchQuery(query)
-    URL = f"https://www.bjs.com/search/{query}"
-    page = httpsGet(URL)
+    # query = formatSearchQuery(query)
+    # URL = f"https://www.bjs.com/search/{query}"
+    # page = httpsGet(URL)
     results = page.findAll("div", {"class": "product"})
     # print(results)
     products = []
@@ -255,17 +268,115 @@ def condense_helper(result_condensed, list, num):
                 result_condensed.append(p)
 
 
+async def async_scrape_url(urls):
+    async with aiohttp.ClientSession() as session:
+        tasks = [scrape_url(session, url) for url in urls]
+        responses = await asyncio.gather(*tasks)
+        return responses
+
+
+# def driver(
+#         product, currency, num=None, df_flag=0, csv=False, cd=None, ui=False, sort=None, isRestApi=False
+# ):
+#     """Returns csv is the user enters the --csv arg,
+#     else will display the result table in the terminal based on the args entered by the user"""
+#
+#     products_1 = searchAmazon(product, df_flag, currency)
+#     products_2 = searchWalmart(product, df_flag, currency)
+#     products_3 = searchEtsy(product, df_flag, currency)
+#     products_4 = searchGoogleShopping(product, df_flag, currency)
+#     products_5 = searchBJs(product, df_flag, currency)
+#
+#     if isRestApi:
+#         return products_1 + products_2 + products_3 + products_4 + products_5
+#
+#     result_condensed = ""
+#     if not ui:
+#         results = products_1 + products_2 + products_3 + products_4 + products_5
+#         result_condensed = (
+#                 products_1[:num]
+#                 + products_2[:num]
+#                 + products_3[:num]
+#                 + products_4[:num]
+#                 + products_5[:num]
+#         )
+#         result_condensed = pd.DataFrame.from_dict(result_condensed, orient="columns")
+#         results = pd.DataFrame.from_dict(results, orient="columns")
+#         if currency == "" or currency == None:
+#             results = results.drop(columns="converted price")
+#             result_condensed = result_condensed.drop(columns="converted price")
+#         if csv == True:
+#             file_name = os.path.join(
+#                 cd, (product + datetime.now().strftime("%y%m%d_%H%M") + ".csv")
+#             )
+#             print("CSV Saved at: ", cd)
+#             print("File Name:", file_name)
+#             results.to_csv(file_name, index=False, header=results.columns)
+#     else:
+#         result_condensed = []
+#         condense_helper(result_condensed, products_1, num)
+#         condense_helper(result_condensed, products_2, num)
+#         condense_helper(result_condensed, products_3, num)
+#         condense_helper(result_condensed, products_4, num)
+#         condense_helper(result_condensed, products_5, num)
+#
+#         if currency != None:
+#             for p in result_condensed:
+#                 p["price"] = getCurrency(currency, p["price"])
+#
+#         # Fix URLs so that they contain http before www
+#         # TODO Fix issue with Etsy links -> For some reason they have www.Etsy.com prepended to the begining of the link
+#         for p in result_condensed:
+#             link = p["link"]
+#             if p["website"] == "Etsy":
+#                 link = link[12:]
+#                 p["link"] = link
+#             elif "http" not in link:
+#                 link = "http://" + link
+#                 p["link"] = link
+#
+#         if sort != None:
+#             result_condensed = pd.DataFrame(result_condensed)
+#             if sort == "rades":
+#                 result_condensed = sortList(result_condensed, "ra", False)
+#             elif sort == "raasc":
+#                 result_condensed = sortList(result_condensed, "ra", True)
+#             elif sort == "pasc":
+#                 result_condensed = sortList(result_condensed, "pr", False)
+#             else:
+#                 result_condensed = sortList(result_condensed, "pr", True)
+#             result_condensed = result_condensed.to_dict(orient="records")
+#
+#         if csv:
+#             file_name = product + "_" + datetime.now() + ".csv"
+#             result_condensed = result_condensed.to_csv(
+#                 file_name, index=False, header=results.columns
+#             )
+#             print(result_condensed)
+#     return result_condensed
+
+
 def driver(
         product, currency, num=None, df_flag=0, csv=False, cd=None, ui=False, sort=None, isRestApi=False
 ):
     """Returns csv is the user enters the --csv arg,
     else will display the result table in the terminal based on the args entered by the user"""
 
-    products_1 = searchAmazon(product, df_flag, currency)
-    products_2 = searchWalmart(product, df_flag, currency)
-    products_3 = searchEtsy(product, df_flag, currency)
-    products_4 = searchGoogleShopping(product, df_flag, currency)
-    products_5 = searchBJs(product, df_flag, currency)
+    query = formatSearchQuery(product)
+    amazon_url = f"https://www.amazon.com/s?k={query}"
+    walmart_url = f"https://www.walmart.com/search?q={query}"
+    etsy_url = f"https://www.etsy.com/search?q={query}"
+    google_url = f"https://www.google.com/search?tbm=shop&q={query}"
+    bjs_url = f"https://www.bjs.com/search/{query}"
+
+    urls = [amazon_url, walmart_url, etsy_url, google_url, bjs_url]
+    result = asyncio.run(async_scrape_url(urls))
+
+    products_1 = searchAmazon(prepare_html_document(result[0]), df_flag, currency)
+    products_2 = searchWalmart(prepare_html_document(result[1]), df_flag, currency)
+    products_3 = searchEtsy(prepare_xml_document(result[2]), df_flag, currency)
+    products_4 = searchGoogleShopping(prepare_html_document(result[3]), df_flag, currency)
+    products_5 = searchBJs(prepare_html_document(result[4]), df_flag, currency)
 
     if isRestApi:
         return products_1 + products_2 + products_3 + products_4 + products_5
@@ -334,3 +445,8 @@ def driver(
             )
             print(result_condensed)
     return result_condensed
+
+
+async def scrape_url(session, url):
+    async with session.get(url) as response:
+        return await response.text()
