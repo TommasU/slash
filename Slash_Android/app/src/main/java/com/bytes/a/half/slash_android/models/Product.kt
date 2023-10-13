@@ -9,7 +9,7 @@ data class Product(
     val rating: String,
     val noOfRating: String,
     val trending: String,
-    val imageUrl: String = ""
+    val image_url: String = ""
 )
 
 //val student = Gson().fromJson(json1, Product::class.java)
