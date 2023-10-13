@@ -224,10 +224,11 @@ def searchBJs(query, df_flag, currency):
     # print(results)
     products = []
     for res in results:
-        titles, prices, links = (
+        titles, prices, links, product_img = (
             res.select("h2"),
             res.select("span.price"),
             res.select("a"),
+            res.select("img.img-link")
         )
         ratings = res.findAll("span", {"class": "on"})
         num_ratings = 0
@@ -237,7 +238,7 @@ def searchBJs(query, df_flag, currency):
         else:
             trending = None
         product = formatResult(
-            "bjs", titles, prices, links, "", num_ratings, trending, df_flag, currency
+            "bjs", titles, prices, links, "", num_ratings, trending, df_flag, currency, product_img
         )
         if len(ratings) != 0:
             product["rating"] = len(ratings)
