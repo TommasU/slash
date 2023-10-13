@@ -22,55 +22,45 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
+import androidx.lifecycle.lifecycleScope
 import coil.compose.rememberAsyncImagePainter
 import com.bytes.a.half.slash_android.composables.ProductCard
 import com.bytes.a.half.slash_android.models.Product
 import com.bytes.a.half.slash_android.ui.theme.Slash_AndroidTheme
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
+
+    private lateinit var slashApi : SlashAPI
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            val products = ArrayList<Product>()
-            products.add(
-                Product(
-                    1,
-                    "tumbler",
-                    45,
-                    "https://m.media-amazon.com/images/I/91ZBiZOuf0L._AC_SX679_.jpg",
-                    "www.amazon.com",
-                    5.6,
-                    3,
-                    "best seller"
-                )
-            )
-
-            products.add(
-                Product(
-                    2,
-                    "sipper",
-                    45,
-                    "https://www.google.com/url?sa=i&url=https%3A%2F%2Fdespicableme.fandom.com%2Fwiki%2FKevin_%2528Despicable_Me_2%2529&psig=AOvVaw3-IL3zbPD3AWexabX6-YXJ&ust=1697064549293000&source=images&cd=vfe&opi=89978449&ved=0CBAQjRxqFwoTCIiU0Z_I7IEDFQAAAAAdAAAAABAE",
-                    "www.amazon.com",
-                    5.6,
-                    3,
-                    "best seller"
-                )
-            )
-            Slash_AndroidTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Products(modifier = Modifier.fillMaxSize(), products) { link ->
-                        val httpIntent = Intent(Intent.ACTION_VIEW)
-                        httpIntent.data = Uri.parse(link)
-                        startActivity(httpIntent)
+        slashApi = SlashAPIHelper.getInstance().create(SlashAPI::class.java)
+        lifecycleScope.launch {
+            val response = slashApi.getSearch("milk")
+            val products = response.body()
+            launch(Dispatchers.Main) {
+                setContent {
+                    Slash_AndroidTheme {
+                        // A surface container using the 'background' color from the theme
+                        Surface(
+                            modifier = Modifier.fillMaxSize(),
+                            color = MaterialTheme.colorScheme.background
+                        ) {
+                            if (products != null) {
+                                Products(modifier = Modifier.fillMaxSize(), products) { link ->
+                                    val httpIntent = Intent(Intent.ACTION_VIEW)
+                                    httpIntent.data = Uri.parse(link)
+                                    startActivity(httpIntent)
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
+
+
     }
 }
 
