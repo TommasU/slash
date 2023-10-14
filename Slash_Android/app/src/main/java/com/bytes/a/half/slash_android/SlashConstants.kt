@@ -14,4 +14,8 @@ object SlashConstants {
     const val COMPANY_TARGET = "target"
     const val TARGET_LOGO_URL= "https://1000logos.net/wp-content/uploads/2017/06/Target-Logo-1974.png"
     const val COMPANY_LOGO_URL = "https://imgs.search.brave.com/l-UmJMecb_qKbO8z0bIMt1IrmiU8nzRWnP0Vx5bihDY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTAy/MjAyODAxMC92ZWN0/b3IvaW1hZ2UtdW5h/dmFpbGFibGUtaWNv/bi5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9N3ozX3ZBcS1S/RVJ4TVhwVmxvdVdS/eHN3SklOTmxPZ3dr/QlpLbFRDek1IZz0"
+
+
+
+    const val KEY_ROUTE = "route"
 }

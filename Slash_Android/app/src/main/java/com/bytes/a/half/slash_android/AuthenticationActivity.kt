@@ -14,12 +14,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.bytes.a.half.slash_android.composables.AccountComposable
 import com.bytes.a.half.slash_android.ui.theme.Slash_AndroidTheme
+import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 class AuthenticationActivity : ComponentActivity() {
 
-    val auth = Firebase.auth
+    lateinit var auth: FirebaseAuth
 
     companion object {
         const val TAG = "Authentication"     // no i18n
@@ -36,6 +38,7 @@ class AuthenticationActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        auth = Firebase.auth
         setContent {
             Slash_AndroidTheme {
                 // A surface container using the 'background' color from the theme
@@ -44,7 +47,9 @@ class AuthenticationActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
 
-                    AccountComposable()
+                    AccountComposable() {
+                        startMainActivity()
+                    }
 
                 }
             }
