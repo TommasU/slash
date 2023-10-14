@@ -11,5 +11,3 @@ data class Product(
     val trending: String,
     val image_url: String = ""
 )
-
-//val student = Gson().fromJson(json1, Product::class.java)
