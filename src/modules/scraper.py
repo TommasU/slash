@@ -178,6 +178,90 @@ def searchEtsy(soup, df_flag, currency):
         products.append(product)
     return products
 
+def searchDollarTree(page,df_flag,currency):
+    """
+        The searchAmazon function scrapes dollartree.com
+        Parameters: query- search query for the product, df_flag- flag variable, currency- currency type entered by the user
+        Returns a list of items available on dollartree.com that match the product entered by the user.
+        """
+    # query = formatSearchQuery(query)
+    # URL = f"https://www.amazon.com/s?k={query}"
+    # page = httpsGet(URL)
+    print(page)
+    results = page.findAll("div", {"class": "product-wrapper"})
+    print(results)
+    products = []
+    for res in results:
+        titles, prices, links = (
+            res.select("div.product-title"),
+            res.select("span.price-value"),
+            res.select("h2 a.a-link-normal"),
+        )
+        ratings = res.select("span.a-icon-alt")
+        num_ratings = res.select("span.a-size-base")
+        trending = res.select("span.a-badge-text")
+        imageUrl = res.select(".s-image")
+        if len(trending) > 0:
+            trending = trending[0]
+        else:
+            trending = None
+        product = formatResult(
+            "amazon",
+            titles,
+            prices,
+            links,
+            ratings,
+            num_ratings,
+            trending,
+            df_flag,
+            currency,
+            imageUrl
+        )
+        products.append(product)
+    return products
+
+
+def searchCostco(page, df_flag, currency):
+    """
+    The searchAmazon function scrapes amazon.com
+    Parameters: query- search query for the product, df_flag- flag variable, currency- currency type entered by the user
+    Returns a list of items available on Amazon.com that match the product entered by the user.
+    """
+    # query = formatSearchQuery(query)
+    # URL = f"https://www.amazon.com/s?k={query}"
+    # page = httpsGet(URL)=
+    results = page.findAll("div", {"class": "product-tile-set"})
+    print(results)
+    products = []
+    for res in results:
+        titles, prices, links = (
+            res.findAll("span", {"class": "description"}),
+            res.findAll("div", {"class": "price"}),
+            res.select("h2 a.a-link-normal"),
+        )
+        ratings = res.select("span.a-icon-alt")
+        num_ratings = res.select("span.a-size-base")
+        trending = res.select("span.a-badge-text")
+        imageUrl = res.select(".s-image")
+        if len(trending) > 0:
+            trending = trending[0]
+        else:
+            trending = None
+        product = formatResult(
+            "amazon",
+            titles,
+            prices,
+            links,
+            ratings,
+            num_ratings,
+            trending,
+            df_flag,
+            currency,
+            imageUrl
+        )
+        products.append(product)
+    return products
+
 
 def searchGoogleShopping(page, df_flag, currency):
     """
@@ -368,9 +452,12 @@ def driver(
     walmart_url = f"https://www.walmart.com/search?q={query}"
     etsy_url = f"https://www.etsy.com/search?q={query}"
     google_url = f"https://www.google.com/search?tbm=shop&q={query}"
+    dollar_tree_url = f"https://www.dollartree.com/searchresults?Ntt={query}"
     bjs_url = f"https://www.bjs.com/search/{query}"
 
-    urls = [amazon_url, walmart_url, etsy_url, google_url, bjs_url]
+
+
+    urls = [amazon_url, walmart_url, etsy_url,google_url, bjs_url]
     result = asyncio.run(async_scrape_url(urls))
 
     products_1 = searchAmazon(prepare_html_document(result[0]), df_flag, currency)
@@ -378,6 +465,7 @@ def driver(
     products_3 = searchEtsy(prepare_xml_document(result[2]), df_flag, currency)
     products_4 = searchGoogleShopping(prepare_html_document(result[3]), df_flag, currency)
     products_5 = searchBJs(prepare_html_document(result[4]), df_flag, currency)
+    # products_6 = searchDollarTree(prepare_html_document(result[5]), df_flag, currency)
 
     if isRestApi:
         return products_1 + products_2 + products_3 + products_4 + products_5
