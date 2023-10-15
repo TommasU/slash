@@ -3,4 +3,6 @@
     <string name="title_activity_authentication">AuthenticationActivity</string>
     <string name="route_search">Search</string>
     <string name="route_wishlist">Wishlist</string>
+    <string name="search">Search</string>
+    <string name="offline">No internet connection</string>
 </resources>
