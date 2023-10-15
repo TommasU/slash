@@ -6,6 +6,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -17,7 +18,7 @@ fun SlashBottomNavigation(
     navController: NavHostController,
     items: List<BottomNavigationScreens>
 ) {
-    BottomNavigation {
+    BottomNavigation(backgroundColor = colorResource(id = R.color.bottom_bar_background)) {
         val currentRoute = currentRoute(navController)
         items.forEach { screen ->
             BottomNavigationItem(

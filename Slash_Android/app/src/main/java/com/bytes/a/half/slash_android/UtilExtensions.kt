@@ -14,3 +14,7 @@ fun Context?.showToast(message: String) {
 fun String?.isValidString(): Boolean {
     return this != null && !TextUtils.isEmpty(this)
 }
+
+fun List<Any>?.isValidList(): Boolean {
+    return !this.isNullOrEmpty()
+}
