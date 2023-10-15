@@ -36,12 +36,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bytes.a.half.slash_android.ui.theme.Purple80
+import androidx.compose.ui.res.stringResource
+import com.bytes.a.half.slash_android.R
 
 @Composable
 fun SignupComposable(onclick: () -> Unit) {
@@ -108,7 +111,7 @@ fun SignupComposable(onclick: () -> Unit) {
 
             if (passwordMatchError) {
                 Text(
-                    text = "Passwords do not match!",
+                    stringResource(id = R.string.password_mismatch),
                     color = Color.Red,
                     modifier = Modifier.padding(top = 4.dp)
                 )
