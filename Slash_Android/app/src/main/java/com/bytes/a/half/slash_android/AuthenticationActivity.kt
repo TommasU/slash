@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.bytes.a.half.slash_android.composables.AccountComposable
+import com.bytes.a.half.slash_android.composables.SignupComposable
 import com.bytes.a.half.slash_android.ui.theme.Slash_AndroidTheme
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
