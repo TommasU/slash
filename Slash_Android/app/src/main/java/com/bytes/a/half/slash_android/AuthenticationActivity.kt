@@ -47,10 +47,11 @@ class AuthenticationActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-
-                    AccountComposable() {
-                        startMainActivity()
-                    }
+                    AccountComposable(this,onSignIn = { email, password ->
+                        signIn(email, password)
+                    }, onSignUp = { email, password ->
+                        signUp(email, password)
+                    })
 
                 }
             }
@@ -64,7 +65,7 @@ class AuthenticationActivity : ComponentActivity() {
     }
 
 
-    fun onSignup(email: String, password: String) {
+    fun signUp(email: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
@@ -81,7 +82,7 @@ class AuthenticationActivity : ComponentActivity() {
     }
 
 
-    fun onSignIn(email: String, password: String) {
+    fun signIn(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {

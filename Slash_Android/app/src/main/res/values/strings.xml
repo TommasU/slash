@@ -5,4 +5,5 @@
     <string name="route_wishlist">Wishlist</string>
     <string name="search">Search</string>
     <string name="offline">No internet connection</string>
+    <string name="sign_in_alert">Email/password can\'t be empty</string>
 </resources>
