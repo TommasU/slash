@@ -20,8 +20,7 @@
     position: relative;
     display: flex;
     padding-top: 15px;
-    padding-left: 380px;
-
+    padding-left: 340px;
 }
 
 .sb-example-1 .searchTerm {
@@ -114,7 +113,7 @@ img {
 
 .cutom-card {
     padding-right: 0.15625em; /* Adjust the padding as needed */
-    width: 18.75%; /* Adjust the width as needed */
+    /* width: 18.75%;  */
     height: 20%; /* Adjust the height as needed */
 }
 
@@ -123,7 +122,9 @@ img {
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    font-size: 1.3125em; /* Adjust the font size as needed */
+    height: 4em;
+    /* padding-top: 0.09375em; */
+    font-size: 1.0rem;
 }
 
 /* .card-image-specs{
@@ -146,13 +147,22 @@ img {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: normal;
-    font-size: 1.3125em;
 }
 
 .card-header img {
     height: 2.625em;
     width: auto;
     padding-top: 0;
+}
+
+.top-heading{
+    text-align: center;
+    font-size: 5.3125em;
+    color: #4CAF50;
+}
+
+.price{
+    font-size: 1.325rem;
 }
 
 /*.card-body {
