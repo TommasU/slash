@@ -37,7 +37,9 @@ import com.bytes.a.half.slash_android.R
 import com.bytes.a.half.slash_android.isValidString
 import com.bytes.a.half.slash_android.showToast
 import com.bytes.a.half.slash_android.ui.theme.Purple80
+import androidx.compose.ui.res.stringResource
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AccountComposable(
     context: Context,
@@ -47,7 +49,7 @@ fun AccountComposable(
     Column(
         verticalArrangement = Arrangement.Center
     ) {
-        Text(text = "Login or sign up to continue")
+        Text( stringResource(id = R.string.login_signup))
         Card(
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.surfaceVariant,
@@ -66,7 +68,7 @@ fun AccountComposable(
                 OutlinedTextField(
                     value = emailFieldValue.value,
                     onValueChange = { emailFieldValue.value = it },
-                    placeholder = { Text(text = "Email id") },
+                    placeholder = { Text(stringResource(id = R.string.email_id)) },
                     modifier = Modifier.fillMaxWidth(),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                     colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -111,8 +113,9 @@ fun AccountComposable(
                             }
                         }) {
                         Text(
-                            text = "Login",
-                            modifier = Modifier.padding(10.dp), color = Color.Black
+                            stringResource(id = R.string.login),
+                            modifier = Modifier.padding(10.dp),
+                            color = Color.Black
                         )
                     }
                     Button(colors = ButtonDefaults.buttonColors(
@@ -130,8 +133,9 @@ fun AccountComposable(
 
                         }) {
                         Text(
-                            text = "Sign up",
-                            modifier = Modifier.padding(10.dp), color = Color.Black
+                            stringResource(id = R.string.sign_up),
+                            modifier = Modifier.padding(10.dp),
+                            color = Color.Black
                         )
                     }
                 }
