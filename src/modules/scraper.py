@@ -19,7 +19,7 @@ import pandas as pd
 import os
 from datetime import datetime
 import asyncio
-import aiohttp
+import httpx
 
 
 def httpsGet(URL):
@@ -178,7 +178,8 @@ def searchEtsy(soup, df_flag, currency):
         products.append(product)
     return products
 
-def searchDollarTree(page,df_flag,currency):
+
+def searchDollarTree(page, df_flag, currency):
     """
         The searchAmazon function scrapes dollartree.com
         Parameters: query- search query for the product, df_flag- flag variable, currency- currency type entered by the user
@@ -354,7 +355,7 @@ def condense_helper(result_condensed, list, num):
 
 
 async def async_scrape_url(urls):
-    async with aiohttp.ClientSession() as session:
+    async with httpx.AsyncClient() as session:
         tasks = [scrape_url(session, url) for url in urls]
         responses = await asyncio.gather(*tasks)
         return responses
@@ -455,9 +456,7 @@ def driver(
     dollar_tree_url = f"https://www.dollartree.com/searchresults?Ntt={query}"
     bjs_url = f"https://www.bjs.com/search/{query}"
 
-
-
-    urls = [amazon_url, walmart_url, etsy_url,google_url, bjs_url]
+    urls = [amazon_url, walmart_url, etsy_url, google_url, bjs_url]
     result = asyncio.run(async_scrape_url(urls))
 
     products_1 = searchAmazon(prepare_html_document(result[0]), df_flag, currency)
@@ -537,5 +536,13 @@ def driver(
 
 
 async def scrape_url(session, url):
-    async with session.get(url) as response:
-        return await response.text()
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36",
+        "Accept-Encoding": "gzip, deflate",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "DNT": "1",
+        "Connection": "close",
+        "Upgrade-Insecure-Requests": "1",
+    }
+    response = await session.get(url, headers=headers)
+    return response.text

@@ -5,53 +5,41 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.Icon
 import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.WifiOff
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.compose.rememberNavController
 import com.bytes.a.half.slash_android.composables.ProductCard
+import com.bytes.a.half.slash_android.composables.SearchScreenParams
 import com.bytes.a.half.slash_android.models.Product
 import com.bytes.a.half.slash_android.ui.theme.Slash_AndroidTheme
-import com.bytes.a.half.slash_android.utils.NetworkUtils
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -60,6 +48,7 @@ class MainActivity : ComponentActivity() {
     val products = mutableStateListOf<Product>()
     val queryFieldValue = mutableStateOf(TextFieldValue(""))
     val showProgress = mutableStateOf(false)
+
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,85 +64,28 @@ class MainActivity : ComponentActivity() {
                 Scaffold(bottomBar = {
                     SlashBottomNavigation(navController, navBarItems)
                 }) {
-                    ConstraintLayout(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(it)
-                            .background(Color.Black)
-                    ) {
-                        val (searchField, progressBar, productListView, offline) = createRefs()
-                        if (NetworkUtils.isOnline(this@MainActivity)) {
-                            SearchField(
-                                queryFieldValue = queryFieldValue,
-                                modifier = Modifier.constrainAs(searchField) {
-                                    start.linkTo(parent.start)
-                                    end.linkTo(parent.end)
-                                    top.linkTo(parent.top)
-                                },
-                                onQueryProduct = { query ->
-                                    coroutineScope.launch {
-                                        showProgress.value = true
-                                        val productList = queryProduct(query)
-                                        if (productList.isValidList()) {
-                                            products.clear()
-                                            products.addAll(productList!!)
-                                        }
-                                        showProgress.value = false
+                    val searchScreenParams =
+                        SearchScreenParams(
+                            this,
+                            queryFieldValue,
+                            products = products,
+                            showProgress,
+                            onProductClick = { link ->
+                                openLink(link)
+                            },
+                            onQueryProduct = { productName ->
+                                showProgress.value = true
+                                coroutineScope.launch {
+                                    val productList = queryProduct(productName)
+                                    products.clear()
+                                    if (productList != null) {
+                                        products.addAll(productList)
                                     }
-                                })
-
-                            if (showProgress.value) {
-                                CircularProgressIndicator(
-                                    modifier = Modifier.constrainAs(
-                                        progressBar
-                                    ) {
-                                        start.linkTo(parent.start)
-                                        end.linkTo(parent.end)
-                                        top.linkTo(searchField.bottom)
-                                        bottom.linkTo(parent.bottom)
-                                    })
-                            }
-
-                            if (products.isValidList()) {
-                                Products(
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .constrainAs(productListView) {
-                                            start.linkTo(parent.start)
-                                            end.linkTo(parent.end)
-                                            top.linkTo(searchField.bottom)
-                                            bottom.linkTo(parent.bottom)
-                                        }, products
-                                ) { link ->
-                                    val httpIntent = Intent(Intent.ACTION_VIEW)
-                                    httpIntent.data = Uri.parse(link)
-                                    startActivity(httpIntent)
-                                }
-                            }
-                        } else {
-                            Box(modifier = Modifier.constrainAs(offline) {
-                                start.linkTo(parent.start)
-                                end.linkTo(parent.end)
-                                top.linkTo(parent.top)
-                                bottom.linkTo(parent.bottom)
-                            }) {
-                                Column(
-                                    modifier = Modifier.align(Alignment.Center),
-                                    horizontalAlignment = Alignment.CenterHorizontally
-                                ) {
-                                    Icon(
-                                        Icons.Filled.WifiOff,
-                                        "",
-                                        modifier = Modifier.size(50.dp), tint = Color.White
-                                    )
-                                    Text(stringResource(id = R.string.offline), color = Color.White)
+                                    showProgress.value = false
                                 }
 
-                            }
-
-                        }
-                    }
-
+                            })
+                    SlashNavigationConfiguration(it, navController, searchScreenParams)
                 }
             }
         }
@@ -165,6 +97,13 @@ class MainActivity : ComponentActivity() {
         val response = slashApi.getSearch(productName)
         val products = response.body()
         return products
+    }
+
+
+    private fun openLink(link: String) {
+        val httpIntent = Intent(Intent.ACTION_VIEW)
+        httpIntent.data = Uri.parse(link)
+        startActivity(httpIntent)
     }
 
 
