@@ -2,8 +2,10 @@ package com.bytes.a.half.slash_android
 
 import android.content.Context
 import android.text.TextUtils
+import android.util.Patterns
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import java.util.regex.Pattern
 
 fun Context?.showToast(message: String) {
     this?.let {
@@ -24,4 +26,8 @@ fun String?.isValidString(): Boolean {
 
 fun List<Any>?.isValidList(): Boolean {
     return !this.isNullOrEmpty()
+}
+
+fun String?.isValidEmail(): Boolean {
+    return isValidString() && Pattern.matches(Patterns.EMAIL_ADDRESS.toString(), this)
 }
