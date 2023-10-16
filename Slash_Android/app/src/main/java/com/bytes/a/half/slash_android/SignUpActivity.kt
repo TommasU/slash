@@ -9,28 +9,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.bytes.a.half.slash_android.composables.AccountComposable
+import com.bytes.a.half.slash_android.composables.SignupComposable
 import com.bytes.a.half.slash_android.ui.theme.Slash_AndroidTheme
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class AuthenticationActivity : ComponentActivity() {
-
+class SignUpActivity : ComponentActivity() {
     lateinit var auth: FirebaseAuth
-
-    companion object {
-        const val TAG = "Authentication"     // no i18n
-    }
-
-
-    override fun onStart() {
-        super.onStart()
-        val currentUser = auth.currentUser
-        if (currentUser != null) {
-            startMainActivity()
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,10 +28,8 @@ class AuthenticationActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    AccountComposable(this, onSignIn = { email, password ->
-                        signIn(email, password)
-                    }, onSignUp = {
-                        startSignUpActivity()
+                    SignupComposable(this,onSignUp = { email, password ->
+                        signUp(email, password)
                     })
 
                 }
@@ -53,32 +37,25 @@ class AuthenticationActivity : ComponentActivity() {
         }
     }
 
-    private fun startMainActivity() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish()
-    }
-
-    private fun startSignUpActivity() {
-        val intent = Intent(this, SignUpActivity::class.java)
-        startActivity(intent)
-        finish()
-    }
-
-
-    fun signIn(email: String, password: String) {
-        auth.signInWithEmailAndPassword(email, password)
+    fun signUp(email: String, password: String) {
+        auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "signInWithEmail:success")
+                    Log.d(AuthenticationActivity.TAG, "createUserWithEmail:success")
                     val user = auth.currentUser
                     startMainActivity()
                 } else {
                     // If sign in fails, display a message to the user.
-                    Log.w(TAG, "signInWithEmail:failure", task.exception)
+                    Log.w(AuthenticationActivity.TAG, "createUserWithEmail:failure", task.exception)
                     showToast(task.exception?.message ?: "")
                 }
             }
+    }
+
+    private fun startMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }

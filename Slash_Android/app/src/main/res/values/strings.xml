@@ -6,9 +6,11 @@
     <string name="search">Search</string>
     <string name="offline">No internet connection</string>
     <string name="sign_in_alert">Email/password can\'t be empty</string>
-    <string name="sign_up">Sign up</string>
+    <string name="sign_up">Sign Up</string>
     <string name="login">Login</string>
     <string name="email_id">Email Id</string>
-    <string name="login_signup">Login or sign up to continue!</string>
-    <string name="password_mismatch">Passwords do not match!</string>
+    <string name="password">Password</string>
+    <string name="Confirm_password">Confirm Password</string>
+    <string name="login_signup">Login or Sign Up to Continue!</string>
+    <string name="password_mismatch">Passwords do not Match!</string>
 </resources>
