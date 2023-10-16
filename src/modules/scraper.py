@@ -354,7 +354,7 @@ def condense_helper(result_condensed, list, num):
 
 
 async def async_scrape_url(urls):
-    async with aiohttp.ClientSession() as session:
+    async with aiohttp.ClientSession(trust_env=True) as session:
         tasks = [scrape_url(session, url) for url in urls]
         responses = await asyncio.gather(*tasks)
         return responses
@@ -537,5 +537,5 @@ def driver(
 
 
 async def scrape_url(session, url):
-    async with session.get(url) as response:
+    async with session.get(url,ssl=False) as response:
         return await response.text()

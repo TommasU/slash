@@ -5,11 +5,13 @@ from src.modules.scraper import driver
 
 app = Flask(__name__, template_folder=".")
 
+@app.route("/")
+def landingpage():
+    return render_template("./static/signin.html")
 
 @app.route("/")
 def landingpage():
-    return render_template("./static/landing.html")
-
+    return render_template("./static/signup.html")
 
 # @app.route("/",methods=["POST","GET"])
 # def landingpage():
