@@ -10,12 +10,16 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.bytes.a.half.slash_android.composables.SearchScreen
 import com.bytes.a.half.slash_android.composables.SearchScreenParams
+import com.bytes.a.half.slash_android.composables.WishListScreen
+import com.bytes.a.half.slash_android.composables.WishListScreenParams
+import com.bytes.a.half.slash_android.models.Product
 
 @Composable
 fun SlashNavigationConfiguration(
     paddingValues: PaddingValues,
     navController: NavHostController,
-    searchScreenParams: SearchScreenParams
+    searchScreenParams: SearchScreenParams,
+    wishListScreenParams: WishListScreenParams
 ) {
     NavHost(
         navController,
@@ -26,7 +30,7 @@ fun SlashNavigationConfiguration(
             SearchScreen(searchScreenParams)
         }
         composable(BottomNavigationScreens.Wishlist.route) {
-//            WishlistScreen()
+            WishListScreen(wishListScreenParams)
         }
     }
 }
