@@ -16,6 +16,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".SignUpActivity"
+            android:exported="false" />
+        <activity
             android:name=".AuthenticationActivity"
             android:exported="true"
             android:theme="@style/Theme.Slash_Android">
@@ -27,9 +30,8 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:theme="@style/Theme.Slash_Android"
-            android:exported="true">
-        </activity>
+            android:exported="true"
+            android:theme="@style/Theme.Slash_Android"></activity>
     </application>
 
 </manifest>
