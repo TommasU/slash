@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
@@ -23,6 +24,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import com.bytes.a.half.slash_android.Products
 import com.bytes.a.half.slash_android.R
 import com.bytes.a.half.slash_android.SearchField
@@ -44,11 +46,13 @@ fun SearchScreen(searchScreenParams: SearchScreenParams) {
         if (NetworkUtils.isOnline(searchScreenParams.context)) {
             SearchField(
                 queryFieldValue = searchScreenParams.queryFieldValue,
-                modifier = Modifier.constrainAs(searchField) {
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                    top.linkTo(parent.top)
-                },
+                modifier = Modifier
+                    .constrainAs(searchField) {
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        top.linkTo(parent.top)
+                    }
+                    .fillMaxWidth(),
                 onQueryProduct = { query ->
                     keyboardController?.hide()
                     focusManager.clearFocus(true)
@@ -70,12 +74,13 @@ fun SearchScreen(searchScreenParams: SearchScreenParams) {
             if (searchScreenParams.products.isValidList()) {
                 Products(
                     modifier = Modifier
-                        .fillMaxSize()
+                        .fillMaxWidth()
                         .constrainAs(productListView) {
                             start.linkTo(parent.start)
                             end.linkTo(parent.end)
                             top.linkTo(searchField.bottom)
                             bottom.linkTo(parent.bottom)
+                            height = Dimension.fillToConstraints
                         }, searchScreenParams.products
                 ) { link ->
                     searchScreenParams.onProductClick(link)

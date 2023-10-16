@@ -1,7 +1,7 @@
 package com.bytes.a.half.slash_android
 
 object SlashHelper {
-    fun getCompanyLogoUrl(companyName: String) : String {
+    fun getCompanyLogoUrl(companyName: String?): String {
         return when (companyName) {
             SlashConstants.COMPANY_AMAZON -> {
                 SlashConstants.AMAZON_LOGO_URL

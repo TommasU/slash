@@ -9,12 +9,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Button
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -22,16 +24,19 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
 import coil.compose.rememberAsyncImagePainter
+import com.bytes.a.half.slash_android.R
 import com.bytes.a.half.slash_android.SlashHelper.getCompanyLogoUrl
 import com.bytes.a.half.slash_android.models.Product
 
 
 @Composable
-fun ProductCard(product: Product, onclick: () -> Unit) {
+fun ProductCard(product: Product, onclick: () -> Unit, onAddToWishList: () -> Unit) {
     Card(
-        modifier = Modifier.clickable {
-            onclick()
-        }.padding(8.dp)
+        modifier = Modifier
+            .clickable {
+                onclick()
+            }
+            .padding(8.dp)
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Image(
@@ -47,9 +52,22 @@ fun ProductCard(product: Product, onclick: () -> Unit) {
                     .height(150.dp) // Adjust the height as needed
                     .clip(shape = RoundedCornerShape(8.dp))
             )
-            Text(text = product.title, maxLines = 2, overflow = TextOverflow.Ellipsis , modifier = Modifier.padding(8.dp))
-            Text(text = product.price.toString(), modifier = Modifier.padding(8.dp) , fontWeight = FontWeight.Bold )
+            Text(
+                text = product.title ?: "",
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.padding(8.dp)
+            )
+            Text(
+                text = product.price.toString(),
+                modifier = Modifier.padding(8.dp),
+                fontWeight = FontWeight.Bold
+            )
             Text(text = product.rating.toString(), modifier = Modifier.padding(8.dp))
+
+            Button(onClick = { onAddToWishList() }) {
+                Text(text = stringResource(id = R.string.add_to_wishlist))
+            }
 
         }
     }

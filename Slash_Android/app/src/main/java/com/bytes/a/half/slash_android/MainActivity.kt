@@ -23,6 +23,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
@@ -38,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
 import com.bytes.a.half.slash_android.composables.ProductCard
 import com.bytes.a.half.slash_android.composables.SearchScreenParams
+import com.bytes.a.half.slash_android.composables.WishListScreenParams
 import com.bytes.a.half.slash_android.models.Product
 import com.bytes.a.half.slash_android.ui.theme.Slash_AndroidTheme
 import kotlinx.coroutines.launch
@@ -46,8 +48,11 @@ class MainActivity : ComponentActivity() {
 
     private lateinit var slashApi: SlashAPI
     val products = mutableStateListOf<Product>()
+    val wishListProducts = mutableStateListOf<Product>()
     val queryFieldValue = mutableStateOf(TextFieldValue(""))
     val showProgress = mutableStateOf(false)
+    val showWishListProgress = mutableStateOf(false)
+    val appbarTitle = mutableStateOf("")
 
 
     @OptIn(ExperimentalMaterial3Api::class)
@@ -61,9 +66,16 @@ class MainActivity : ComponentActivity() {
                 listOf(BottomNavigationScreens.Search, BottomNavigationScreens.Wishlist)
             Slash_AndroidTheme {
                 // A surface container using the 'background' color from the theme
-                Scaffold(bottomBar = {
-                    SlashBottomNavigation(navController, navBarItems)
-                }) {
+                Scaffold(
+                    bottomBar = {
+                        SlashBottomNavigation(navController, navBarItems, appbarTitle)
+                    },
+                    topBar = {
+                        TopAppBar(title = {
+                            Text(appbarTitle.value)
+                        })
+                    },
+                ) {
                     val searchScreenParams =
                         SearchScreenParams(
                             this,
@@ -85,7 +97,20 @@ class MainActivity : ComponentActivity() {
                                 }
 
                             })
-                    SlashNavigationConfiguration(it, navController, searchScreenParams)
+
+                    val wishListScreenParams = WishListScreenParams(
+                        this,
+                        wishListProducts,
+                        showWishListProgress,
+                        onProductClick = { link ->
+                            openLink(link)
+                        })
+                    SlashNavigationConfiguration(
+                        it,
+                        navController,
+                        searchScreenParams,
+                        wishListScreenParams
+                    )
                 }
             }
         }
@@ -118,9 +143,13 @@ fun Products(
         columns = GridCells.Fixed(2), modifier = modifier
     ) {
         itemsIndexed(products) { index, product ->
-            ProductCard(product = product) {
-                onclick(product.link)
-            }
+            ProductCard(product = product, onclick = {
+                if (product.link.isValidString()) {
+                    onclick(product.link!!)
+                }
+            }, onAddToWishList = {
+                SlashAPIHelper.addToWishList(product)
+            })
         }
     }
 
