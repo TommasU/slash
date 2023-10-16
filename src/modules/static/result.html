@@ -20,6 +20,23 @@
 <body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
+<div class="container top-heading">
+    <p><h1>Get all your SLASHING deals here!</h1></p>
+</div>
+
+<div class="container">
+    <div class="sb-example-1">
+        <form action="/search" method="get">
+            <div class="search">
+                <input type="text" name="product_name" class="searchTerm" placeholder="Type here">
+                <button type="submit" class="searchButton">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>    
+
 <div class="container" id="abc">
     <div class="row">
         <div class="col-sm">
@@ -95,35 +112,37 @@
                 <div class="card mb-4 cutom-card">
                     <div class="card-header">
                         {% if product.website == "amazon" %}
-                        <img src="https://assets.aboutamazon.com/88/05/0feec6ff47bab443d2c82944bb09/amazon-logo.png" alt="Amazon Logo" style="height: 75px; width: auto; padding-top: 0;">
+                        <img src="https://assets.aboutamazon.com/88/05/0feec6ff47bab443d2c82944bb09/amazon-logo.png" alt="Amazon Logo" style="height: 2.625em; width: auto; padding-top: 0;">
                         {% elif product.website == "walmart" %}
-                        <img src="https://imgs.search.brave.com/IzKQVIjxH1sLt59kZJgJAWou4WGskWMgvB0KADrpd0o/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9jZG4u/Y29ycG9yYXRlLndh/bG1hcnQuY29tL2Rp/bXM0L1dNVC9iMzM0/ZmViLzIxNDc0ODM2/NDcvc3RyaXAvdHJ1/ZS9jcm9wLzg1NXgz/MDUrMCswL3Jlc2l6/ZS85ODB4MzUwIS9x/dWFsaXR5LzkwLz91/cmw9aHR0cHM6Ly9j/ZG4uY29ycG9yYXRl/LndhbG1hcnQuY29t/Lzk4LzI4LzM0MmNj/YmZmNDc4YWIwMjU1/OTI2NDVmYWZjZmMv/d2FsbWFydC1sb2dv/LnBuZw" alt="Walmart Logo" style="height: 75px; width: auto; padding-top: 0;">
+                        <img src="https://imgs.search.brave.com/IzKQVIjxH1sLt59kZJgJAWou4WGskWMgvB0KADrpd0o/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9jZG4u/Y29ycG9yYXRlLndh/bG1hcnQuY29tL2Rp/bXM0L1dNVC9iMzM0/ZmViLzIxNDc0ODM2/NDcvc3RyaXAvdHJ1/ZS9jcm9wLzg1NXgz/MDUrMCswL3Jlc2l6/ZS85ODB4MzUwIS9x/dWFsaXR5LzkwLz91/cmw9aHR0cHM6Ly9j/ZG4uY29ycG9yYXRl/LndhbG1hcnQuY29t/Lzk4LzI4LzM0MmNj/YmZmNDc4YWIwMjU1/OTI2NDVmYWZjZmMv/d2FsbWFydC1sb2dv/LnBuZw" alt="Walmart Logo" style="height: 2.625em; width: auto; padding-top: 0;">
                         {% elif product.website == "Etsy" %}
-                        <img src="https://imgs.search.brave.com/KLqtjbeEInJesRHZuySZ1qRvgDO_JgnUcrayt1GMLa4/rs:fit:860:0:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvY29tbW9ucy9h/L2FhL0V0c3lfbG9n/b19sZ19yZ2IucG5n" alt="Etsy Logo" style="height: 75px; width: auto; padding-top: 0;">
+                        <img src="https://imgs.search.brave.com/KLqtjbeEInJesRHZuySZ1qRvgDO_JgnUcrayt1GMLa4/rs:fit:860:0:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvY29tbW9ucy9h/L2FhL0V0c3lfbG9n/b19sZ19yZ2IucG5n" alt="Etsy Logo" style="height: 2.625em; width: auto; padding-top: 0;">
                         {% elif product.website == "bjs" %}
-                        <img src="https://imgs.search.brave.com/B-Tn45m_I8xI967BXiEXy-WuyP7QzFeYz5ayPC6u4ic/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9zZWVr/bG9nby5jb20vaW1h/Z2VzL0IvYmpzLXdo/b2xlc2FsZS1jbHVi/LWxvZ28tMEUyRTMz/RDZFNC1zZWVrbG9n/by5jb20ucG5n" alt="BJ's Logo" style="height: 75px; width: auto; padding-top: 0;">
+                        <img src="https://imgs.search.brave.com/B-Tn45m_I8xI967BXiEXy-WuyP7QzFeYz5ayPC6u4ic/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9zZWVr/bG9nby5jb20vaW1h/Z2VzL0IvYmpzLXdo/b2xlc2FsZS1jbHVi/LWxvZ28tMEUyRTMz/RDZFNC1zZWVrbG9n/by5jb20ucG5n" alt="BJ's Logo" style="height: 2.625em; width: auto; padding-top: 0;">
                         {% elif product.website == "google" %}
-                        <img src="https://imgs.search.brave.com/Llnp2hrCdOQcniIHaLHTO6FebIEoIPllNY8DzsZS2Ww/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9jZG4u/aWNvbi1pY29ucy5j/b20vaWNvbnMyLzI2/NDIvUE5HLzUxMi9n/b29nbGVfc2hvcHBp/bmdfdGFnX2xvZ29f/aWNvbl8xNTkzMzIu/cG5n" alt="Google Logo" style="height: 75px; width: auto; padding-top: 0;">
+                        <img src="https://imgs.search.brave.com/Llnp2hrCdOQcniIHaLHTO6FebIEoIPllNY8DzsZS2Ww/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9jZG4u/aWNvbi1pY29ucy5j/b20vaWNvbnMyLzI2/NDIvUE5HLzUxMi9n/b29nbGVfc2hvcHBp/bmdfdGFnX2xvZ29f/aWNvbl8xNTkzMzIu/cG5n" alt="Google Logo" style="height: 2.625em; width: auto; padding-top: 0;">
                         {% elif product.website == "costco" %}
-                        <img src="images/costco.jpg" alt="Costco Logo" style="height: 75px; width: auto; padding-top: 0;">
+                        <img src="images/costco.jpg" alt="Costco Logo" style="height: 2.625em; width: auto; padding-top: 0;">
                         {% else %}
-                        <img src="https://imgs.search.brave.com/l-UmJMecb_qKbO8z0bIMt1IrmiU8nzRWnP0Vx5bihDY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTAy/MjAyODAxMC92ZWN0/b3IvaW1hZ2UtdW5h/dmFpbGFibGUtaWNv/bi5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9N3ozX3ZBcS1S/RVJ4TVhwVmxvdVdS/eHN3SklOTmxPZ3dr/QlpLbFRDek1IZz0" alt="Default Logo" style="height: 75px; width: auto; padding-top: 0;">
+                        <img src="https://imgs.search.brave.com/l-UmJMecb_qKbO8z0bIMt1IrmiU8nzRWnP0Vx5bihDY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTAy/MjAyODAxMC92ZWN0/b3IvaW1hZ2UtdW5h/dmFpbGFibGUtaWNv/bi5qcGc_cz02MTJ4/NjEyJnc9MCZrPTIw/JmM9N3ozX3ZBcS1S/RVJ4TVhwVmxvdVdS/eHN3SklOTmxPZ3dr/QlpLbFRDek1IZz0" alt="Default Logo" style="height: 2.625em; width: auto; padding-top: 0;">
                         {% endif %}
                     </div>
-                    <div class="card-body" style="width: 270px; height: 300px; display: flex; align-items: center; justify-content: center;">
+                    <div class="card-body" style="width: 100%; height: 270px; display: flex; align-items: center; justify-content: center;">
                         <div class="image-container">
                             <a href={{ product.link }} target="_blank">
-                                <img class="card-img-top" src="{{ product.image_url }}" alt="No image" style="object-fit: contain; max-width: 100%; max-height: 100%;">
+                                <img class="card-img-top" src="{{ product.image_url }}" alt="No image" style="object-fit: contain; max-width: 100%; max-height: 100%; padding: 0">
                             </a>
                         </div>
                     </div>
-                    <div class="card-body title" style="height: 50px; padding-top: 2px;">
-                        <a href={{ product.link }} target="_blank">
+                    <div class="card-body title">
+                        <a style="text-decoration: none; color: rgb(37, 65, 56);" href={{ product.link }} target="_blank">
                             <p class="two-line-text">{{ product.title }}</p>
                         </a>
                     </div>
                     <div class="card-body" style="text-align: center;">   
-                        <p class="card-text"><b>{{ product.price }}</b></p>
+                        <div class="price">
+                            <p class="card-text"><b>{{ product.price }}</b></p>
+                        </div>
                         <p class="card-text">Average rating: {{ product.rating }}</p>
                     </div>
                 </div>

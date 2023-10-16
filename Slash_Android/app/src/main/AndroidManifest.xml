@@ -16,9 +16,11 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".SignUpActivity"
+            android:exported="false" />
+        <activity
             android:name=".AuthenticationActivity"
             android:exported="true"
-            android:label="@string/title_activity_authentication"
             android:theme="@style/Theme.Slash_Android">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,13 +31,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.Slash_Android">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/Theme.Slash_Android"></activity>
     </application>
 
 </manifest>
