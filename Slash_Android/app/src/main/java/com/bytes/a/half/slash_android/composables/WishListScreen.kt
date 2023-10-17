@@ -33,9 +33,11 @@ fun WishListScreen(wishListScreenParams: WishListScreenParams) {
         wishListScreenParams.showProgress.value = false
     }
 
-    ConstraintLayout(modifier = Modifier
-        .fillMaxSize()
-        .background(Color.Black)) {
+    ConstraintLayout(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black)
+    ) {
         val (wishlist, progress, noItemsFound) = createRefs()
         if (wishListScreenParams.showProgress.value) {
             CircularProgressIndicator(modifier = Modifier.constrainAs(progress) {
@@ -58,7 +60,7 @@ fun WishListScreen(wishListScreenParams: WishListScreenParams) {
                         .padding(16.dp),
                     color = Color.White, textAlign = TextAlign.Center)
             } else {
-                Products(modifier = Modifier
+                Products(wishListScreenParams.context, modifier = Modifier
                     .constrainAs(wishlist) {
                         start.linkTo(parent.start)
                         end.linkTo(parent.end)
@@ -66,6 +68,7 @@ fun WishListScreen(wishListScreenParams: WishListScreenParams) {
                         bottom.linkTo(parent.bottom)
                     }
                     .fillMaxSize(),
+                    isWishlist = true,
                     products = wishListScreenParams.products,
                     onclick = { link ->
                         wishListScreenParams.onProductClick(link)

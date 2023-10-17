@@ -43,6 +43,16 @@ object SlashAPIHelper {
         }
     }
 
+    fun removeFromWishList(product: Product) {
+        val userId = FirebaseUtils.auth.uid
+        if (userId.isValidString()) {
+            val wishListReference = FirebaseUtils.database.child("wishlists").child(userId!!)
+            if (product.id.isValidString()) {
+                wishListReference.child(product.id!!).removeValue()
+            }
+        }
+    }
+
     suspend fun getWishListProducts(): ArrayList<Product> {
         val productList = ArrayList<Product>()
         val userId = FirebaseUtils.auth.uid
