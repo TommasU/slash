@@ -1,3 +1,42 @@
+.space{
+    line-height: 2rem;
+}
+h1{
+    padding-top: 10%;
+    text-align: center;
+}
+.note
+{
+    text-align: center;
+    height: 80px;
+    background: -webkit-linear-gradient(left, #80ff00, #11c541);
+    color: #fff;
+    font-weight: bold;
+    line-height: 80px;
+}
+.form-content
+{
+    padding: 5%;
+    border: 1px solid #ced4da;
+    margin-bottom: 2%;
+}
+.form-control{
+    border-radius:1.5rem;
+}
+.form-group{
+    padding: 2%;
+}
+.btnSubmit
+{
+    border:none;
+    border-radius:1.5rem;
+    padding: 1%;
+    width: 20%;
+    cursor: pointer;
+    background: green;
+    color: #fff;
+    text-align: center;
+}    
 #header {
     font-family: Trebuchet MS, sa ns-serif;
     font-size: 32px;
@@ -177,3 +216,4 @@ img {
     font-size: 1.3125em; 
     text-align: center;
 } */ 
+
