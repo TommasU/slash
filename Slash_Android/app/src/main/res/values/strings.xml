@@ -4,6 +4,7 @@
     <string name="route_search">Search</string>
     <string name="route_wishlist">Wishlist</string>
     <string name="search">Search</string>
+    <string name="slash">Slash</string>
     <string name="offline">No internet connection</string>
     <string name="sign_in_alert">Email/password can\'t be empty</string>
     <string name="no_items_found">No items found</string>

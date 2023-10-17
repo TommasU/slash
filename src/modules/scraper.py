@@ -107,7 +107,7 @@ def searchWalmart(page, df_flag, currency):
     for res in results:
         titles, prices, links, product_img = (
             res.select("span.lh-title"),
-            res.select("div.lh-copy"),
+            res.findAll("div", {"data-automation-id": "product-price"}),
             res.select("a"),
             res.findAll("img", {"data-testid": "productTileImage"})
         )

@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
@@ -24,6 +25,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
@@ -32,10 +35,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.navigation.compose.rememberNavController
 import com.bytes.a.half.slash_android.composables.ProductCard
 import com.bytes.a.half.slash_android.composables.SearchScreenParams
@@ -49,7 +54,8 @@ class MainActivity : ComponentActivity() {
     private lateinit var slashApi: SlashAPI
     val products = mutableStateListOf<Product>()
     val wishListProducts = mutableStateListOf<Product>()
-    val queryFieldValue = mutableStateOf(TextFieldValue(""))
+    val queryFieldValue =
+        mutableStateOf(TextFieldValue(""))
     val showProgress = mutableStateOf(false)
     val showWishListProgress = mutableStateOf(false)
     val appbarTitle = mutableStateOf("")
@@ -59,59 +65,67 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         slashApi = SlashAPIHelper.getInstance().create(SlashAPI::class.java)
+        appbarTitle.value = ContextCompat.getString(this, R.string.slash)
         setContent {
             val navController = rememberNavController()
             val coroutineScope = rememberCoroutineScope()
             val navBarItems =
                 listOf(BottomNavigationScreens.Search, BottomNavigationScreens.Wishlist)
-            Slash_AndroidTheme {
-                // A surface container using the 'background' color from the theme
-                Scaffold(
-                    bottomBar = {
-                        SlashBottomNavigation(navController, navBarItems, appbarTitle)
-                    },
-                    topBar = {
-                        TopAppBar(title = {
-                            Text(appbarTitle.value)
-                        })
-                    },
-                ) {
-                    val searchScreenParams =
-                        SearchScreenParams(
-                            this,
-                            queryFieldValue,
-                            products = products,
-                            showProgress,
-                            onProductClick = { link ->
-                                openLink(link)
-                            },
-                            onQueryProduct = { productName ->
-                                showProgress.value = true
-                                coroutineScope.launch {
-                                    val productList = queryProduct(productName)
-                                    products.clear()
-                                    if (productList != null) {
-                                        products.addAll(productList)
-                                    }
-                                    showProgress.value = false
-                                }
-
-                            })
-
-                    val wishListScreenParams = WishListScreenParams(
+            // A surface container using the 'background' color from the theme
+            Scaffold(
+                bottomBar = {
+                    SlashBottomNavigation(navController, navBarItems, appbarTitle)
+                },
+                topBar = {
+                    TopAppBar(
+                        title = {
+                            Text(
+                                appbarTitle.value,
+                                color = Color.White
+                            )
+                        },
+                        colors = TopAppBarDefaults.smallTopAppBarColors(
+                            titleContentColor = Color.White,
+                            containerColor = colorResource(id = R.color.bottom_bar_background)
+                        )
+                    )
+                },
+            ) {
+                val searchScreenParams =
+                    SearchScreenParams(
                         this,
-                        wishListProducts,
-                        showWishListProgress,
+                        queryFieldValue,
+                        products = products,
+                        showProgress,
                         onProductClick = { link ->
                             openLink(link)
+                        },
+                        onQueryProduct = { productName ->
+                            showProgress.value = true
+                            coroutineScope.launch {
+                                val productList = queryProduct(productName)
+                                products.clear()
+                                if (productList != null) {
+                                    products.addAll(productList)
+                                }
+                                showProgress.value = false
+                            }
+
                         })
-                    SlashNavigationConfiguration(
-                        it,
-                        navController,
-                        searchScreenParams,
-                        wishListScreenParams
-                    )
-                }
+
+                val wishListScreenParams = WishListScreenParams(
+                    this,
+                    wishListProducts,
+                    showWishListProgress,
+                    onProductClick = { link ->
+                        openLink(link)
+                    })
+                SlashNavigationConfiguration(
+                    it,
+                    navController,
+                    searchScreenParams,
+                    wishListScreenParams
+                )
             }
         }
 
@@ -140,7 +154,7 @@ fun Products(
     modifier: Modifier = Modifier, products: List<Product>, onclick: (link: String) -> Unit
 ) {
     LazyVerticalGrid(
-        columns = GridCells.Fixed(2), modifier = modifier
+        columns = GridCells.Fixed(2), modifier = modifier.padding(top = 8.dp)
     ) {
         itemsIndexed(products) { index, product ->
             ProductCard(product = product, onclick = {

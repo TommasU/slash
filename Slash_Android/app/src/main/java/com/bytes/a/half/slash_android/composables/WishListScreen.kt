@@ -1,6 +1,7 @@
 package com.bytes.a.half.slash_android.composables
 
 import android.content.Context
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -32,7 +33,9 @@ fun WishListScreen(wishListScreenParams: WishListScreenParams) {
         wishListScreenParams.showProgress.value = false
     }
 
-    ConstraintLayout(modifier = Modifier.fillMaxSize()) {
+    ConstraintLayout(modifier = Modifier
+        .fillMaxSize()
+        .background(Color.Black)) {
         val (wishlist, progress, noItemsFound) = createRefs()
         if (wishListScreenParams.showProgress.value) {
             CircularProgressIndicator(modifier = Modifier.constrainAs(progress) {
