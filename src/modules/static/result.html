@@ -98,9 +98,9 @@
             <div class="form-group">
                 <label class="control-label col-sm-offset-2 col-sm-2" for="company"></label>
                     <form action="/wishlist" method="get">
-                        <a href="./wishlist.html" class="btn btn-danger" role="button">
+                        <button type="submit" class="btn btn-danger">
                             &hearts; Wishlist
-                        </a>
+                        </button>
                     </form>
             </div>
         </div>
@@ -156,12 +156,8 @@
                             <p class="card-text"><b>{{ product.price }}</b></p>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
                                 <p class="card-text">Average rating: {{ product.rating }}</p>
-                            </div>
-                            <div class="col-md-6 text-right">
-                                <a href="./wishlist.html" class="btn btn-sm btn-danger" role="button">&hearts;</a>
-                            </div>
+                                <a href="./wishlist.html" class="btn btn-sm btn-danger" role="button">&hearts; Add to Wishlist</a>
                         </div>
                     </div>
                 </div>
