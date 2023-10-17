@@ -54,6 +54,9 @@ def formatResult(
         price = "$" + price
     if links:
         link = links[0]["href"]
+        if link.startswith("http"):
+
+
     if ratings:
         rating = float(ratings[0].get_text().strip().split()[0])
     if trending:
