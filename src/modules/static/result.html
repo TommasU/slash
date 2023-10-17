@@ -90,9 +90,21 @@
         </div>
         <div class="col-sm">
             <br>
-            <input type="submit" class="button button1" value="Filter Search"/>
+            <input type="submit" class="button button1 green-button" value="Filter Search"/>
             </form>
         </div>
+
+        <div class="col-sm">
+            <div class="form-group">
+                <label class="control-label col-sm-offset-2 col-sm-2" for="company"></label>
+                    <form action="/wishlist" method="get">
+                        <a href="./wishlist.html" class="btn btn-danger" role="button">
+                            &hearts; Wishlist
+                        </a>
+                    </form>
+            </div>
+        </div>
+
         <!-- <div class="col-sm">
             <form action = "/csv?product_name={{prod}}" method = "post" id="csv">
             <br>
@@ -143,7 +155,14 @@
                         <div class="price">
                             <p class="card-text"><b>{{ product.price }}</b></p>
                         </div>
-                        <p class="card-text">Average rating: {{ product.rating }}</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="card-text">Average rating: {{ product.rating }}</p>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <a href="./wishlist.html" class="btn btn-sm btn-danger" role="button">&hearts;</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

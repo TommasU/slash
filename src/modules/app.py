@@ -54,6 +54,21 @@ def product_search(new_product="", sort=None, currency=None, num=None):
 
     return render_template("./static/result.html", data=data, prod=product)
 
+# @app.route("/wishlist", methods=["POST", "GET"])
+# def product_wishlist(new_product="", sort=None, currency=None, num=None):
+#     product = request.args.get("product_name")
+#     if product == None:
+#         product = new_product
+#     isRestApi = request.headers.get('Content-Type','') == 'application/json'
+#     data = driver(product, currency, num, 0, False, None, True, sort, isRestApi)
+#     if isRestApi:
+#         return jsonify(data)
+
+#     return render_template("./static/wishlist.html", data=data, prod=product)
+
+@app.route('/wishlist')
+def wishlist():
+    return render_template("./static/wishlist.html")
 
 @app.route("/filter", methods=["POST", "GET"])
 def product_search_filtered():
