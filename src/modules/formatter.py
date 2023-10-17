@@ -47,15 +47,15 @@ def formatResult(
         title = titles[0].get_text().strip()
     if prices:
         if website == "walmart":
-            price = prices[0].select(".w_iUH7")[0].get_text().replace("current price ","").strip()
+            price = prices[0].select(".w_iUH7")[0].get_text().replace("current price ", "").strip()
         else:
             price = prices[0].get_text().strip()
     if "$" not in price:
         price = "$" + price
     if links:
         link = links[0]["href"]
-        if link.startswith("http"):
-
+        if not link.startswith("http"):
+            link = f'http://www.{website}.com{link}'
 
     if ratings:
         rating = float(ratings[0].get_text().strip().split()[0])
