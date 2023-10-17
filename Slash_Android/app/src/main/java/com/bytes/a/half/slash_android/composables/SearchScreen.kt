@@ -73,6 +73,7 @@ fun SearchScreen(searchScreenParams: SearchScreenParams) {
 
             if (searchScreenParams.products.isValidList()) {
                 Products(
+                    searchScreenParams.context,
                     modifier = Modifier
                         .fillMaxWidth()
                         .constrainAs(productListView) {
@@ -81,7 +82,7 @@ fun SearchScreen(searchScreenParams: SearchScreenParams) {
                             top.linkTo(searchField.bottom)
                             bottom.linkTo(parent.bottom)
                             height = Dimension.fillToConstraints
-                        }, searchScreenParams.products
+                        }, isWishlist = false, searchScreenParams.products
                 ) { link ->
                     searchScreenParams.onProductClick(link)
                 }

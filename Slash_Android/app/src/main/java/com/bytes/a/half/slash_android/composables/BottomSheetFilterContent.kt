@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -23,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import com.bytes.a.half.slash_android.R
 
 
-
 @Composable
 fun BottomSheetListItem(icon: Int, title: String, onItemClick: (String) -> Unit) {
     Row(
@@ -31,9 +31,15 @@ fun BottomSheetListItem(icon: Int, title: String, onItemClick: (String) -> Unit)
             .fillMaxWidth()
             .clickable(onClick = { onItemClick(title) })
             .height(55.dp)
-            .background(color = colorResource(id = R.color.purple_200)
-    )) {
-        Icon(painter = painterResource(id = icon), contentDescription = "Filter", tint = Color.White)
+            .background(
+                color = colorResource(id = R.color.purple_200)
+            ), verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            painter = painterResource(id = icon),
+            contentDescription = "Filter",
+            tint = Color.White
+        )
         Spacer(modifier = Modifier.width(20.dp))
         Text(text = "Filter", color = Color.White)
     }
@@ -89,7 +95,10 @@ fun BottomSheetContent() {
 @Preview(showBackground = true)
 @Composable
 fun BottomSheetListItemPreview() {
-    BottomSheetListItem(icon = R.drawable.ic_launcher_background, title = "Filter", onItemClick = { })
+    BottomSheetListItem(
+        icon = R.drawable.ic_launcher_background,
+        title = "Filter",
+        onItemClick = { })
 }
 
 @Preview(showBackground = true)

@@ -1,5 +1,6 @@
 package com.bytes.a.half.slash_android
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -48,6 +49,7 @@ import com.bytes.a.half.slash_android.composables.WishListScreenParams
 import com.bytes.a.half.slash_android.models.Product
 import com.bytes.a.half.slash_android.ui.theme.Slash_AndroidTheme
 import kotlinx.coroutines.launch
+import kotlin.coroutines.coroutineContext
 
 class MainActivity : ComponentActivity() {
 
@@ -150,8 +152,11 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun Products(
-    modifier: Modifier = Modifier, products: List<Product>, onclick: (link: String) -> Unit
+fun Products( context: Context,
+    modifier: Modifier = Modifier,
+    isWishlist: Boolean = false,
+    products: MutableList<Product>,
+    onclick: (link: String) -> Unit
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2), modifier = modifier.padding(top = 8.dp)
@@ -161,8 +166,17 @@ fun Products(
                 if (product.link.isValidString()) {
                     onclick(product.link!!)
                 }
-            }, onAddToWishList = {
-                SlashAPIHelper.addToWishList(product)
+            }, isWishlist = isWishlist, onAddToWishList = {
+                if (isWishlist) {
+                    val isRemoved = products.remove(product)
+                    if(isRemoved) {
+                        context.showToast(R.string.product_remove_success)
+                    }
+                    SlashAPIHelper.removeFromWishList(product)
+                } else {
+
+                    SlashAPIHelper.addToWishList(product)
+                }
             })
         }
     }
