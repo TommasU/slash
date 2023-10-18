@@ -21,7 +21,7 @@ jobs:
           pip install pytest-cov
           echo $PWD
           export PYTHONPATH=$PWD
-          pytest --cov=./ --cov-report=xml
+          pytest --cov=.
 
     
       - name: Upload coverage reports to Codecov
