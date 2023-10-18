@@ -11,6 +11,7 @@
 [![codecov](https://codecov.io/gh/TommasU/slash/branch/main/graph/badge.svg?token=MGTU44PI4F)](https://codecov.io/gh/TommasU/slash)
 [![Pylint](https://github.com/SaikrishnaRajaraman/slash/actions/workflows/pylint.yml/badge.svg)](https://github.com/SaikrishnaRajaraman/slash/actions/workflows/pylint.yml)
 [![Python Style Checker](https://github.com/SEProjGrp5/slash/actions/workflows/style_checker.yml/badge.svg?branch=main)](https://github.com/TommasU/slash/actions/workflows/style_checker.yml)
+[![Python package](https://github.com/SaikrishnaRajaraman/slash/actions/workflows/python-package.yml/badge.svg)](https://github.com/SaikrishnaRajaraman/slash/actions/workflows/python-package.yml)
 
 Slash is a tool that scrapes the most popular e-commerce websites to get the best deals on searched items across these websites. 
 - **Fast**: With slash, you can save over 50% of your time by comparing deals across websites within seconds
