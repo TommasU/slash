@@ -63,6 +63,7 @@ def main():
         help="Display the amount in specified currency(inr, euro, aud, yuan, yen, pound)",
     )
     args = parser.parse_args()
+    print(args)
 
     if args.full == "T":
 
