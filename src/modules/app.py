@@ -81,22 +81,9 @@ def product_search(new_product="", sort=None, currency=None, num=None):
 
 
 @app.route("/wishlist", methods=["POST", "GET"])
-def product_wishlist(new_product="", sort=None, currency=None, num=None):
-    # product = request.args.get("milk")
-    product = "milk"
-    if product == None:
-        product = new_product
+def product_wishlist():
     wishlists = db.child("wishlists").child(session.get('user')).get()
-    print(wishlists.val().values())
-    # data = driver(product, currency, num, 0, False, None, True, sort, False)
-    # print(wishlists.val().values())
-
-    return render_template("./static/wishlist.html", data=wishlists.val().values(), prod=product)
-
-
-# @app.route('/wishlist')
-# def wishlist():
-#     return render_template("./static/wishlist.html")
+    return render_template("./static/wishlist.html", data=wishlists.val().values())
 
 @app.route("/filter", methods=["POST", "GET"])
 def product_search_filtered():
