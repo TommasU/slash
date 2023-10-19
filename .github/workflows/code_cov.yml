@@ -14,6 +14,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Generate coverage report
+        run: |
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install pytest
+          pip install pytest-cov
+          pip install pytest-flask
+          echo $PWD
+          export PYTHONPATH=$PWD
+          python -m pytest --cov=.
+
+    
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
         env:
