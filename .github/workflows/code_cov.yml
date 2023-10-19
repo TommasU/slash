@@ -22,7 +22,7 @@ jobs:
           pip install pytest-flask
           echo $PWD
           export PYTHONPATH=$PWD
-          python -m pytest --cov=.
+          pytest --cov=.
 
     
       - name: Upload coverage reports to Codecov
