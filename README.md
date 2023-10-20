@@ -347,6 +347,171 @@ File Name: C:\Anant\NCSU\slash_test_csv\socks211104_1223.csv
 - Future updates aim to encompass a wide variety of users irrespective of their computer knowledge and background.
 
 
+# :dizzy: What's New in Phase 4
+
+# Slash - Your Ultimate Shopping Companion
+
+## Overview
+
+Slash is a versatile mobile app for Android and a corresponding website that redefines your online shopping experience. With a focus on convenience and savings, Slash allows users to find the best deals on their favorite items across popular e-commerce websites. This project combines the power of Flask,Firebase, HTML, CSS, Bootstrap, and Kotlin in Android Studio to create a seamless shopping platform.
+
+## Features
+
+### User Authentication
+
+- Users can sign up for the website or app by providing their email address and setting a secure password.
+- Returning users can easily sign in by entering their previously registered credentials.
+- All form fields are subject to validation, ensuring data accuracy and security.
+- User information entered during the sign-up process is securely stored and managed using Firebase.
+
+### Web & Mobile App
+
+- Slash offers both a mobile app for Android and a website, providing a consistent shopping experience across platforms.
+
+### Real-Time Web Scraping
+
+- Slash revolutionizes the way you shop by scraping data from popular e-commerce websites in real time.
+- Our multi-threading approach enables parallel queries to all these websites, ensuring fast and up-to-date search results.
+
+### Search Results
+
+- The search results are displayed neatly on the results page.
+- Each item includes an image, the originating website, its price, and the average user rating.
+- Users can conveniently add items to their wishlist for future reference.
+
+### Sorting & Filtering
+
+- Users can sort the displayed items by price and rating, both from high to low and vice versa.
+- A currency filter allows users to view prices in their preferred currency, whether it's INR, POUND, EURO, or others.
+- A filter option lets users narrow down the list to view only limited items from the entire selection.
+
+
+### Wishlist Management
+
+- Users can maintain a wishlist of their favorite items, easily accessible through the "Wishlist" button.
+
+## Usage
+
+1. Sign up with your email and password to get started.
+2. Conduct searches for your desired items and enjoy real-time results.
+3. Add items to your wishlist with a single click.
+4. Use the various sorting and filtering options to tailor your search results.
+5. Access your wishlist at any time to keep track of your favorite items.
+
+Slash is all about simplicity, convenience, and savings. Discover the best deals effortlessly and revolutionize your online shopping journey today!
+
+## Screenshots
+
+### Website: 
+
+![Sign-in](https://github.com/SaikrishnaRajaraman/slash/assets/88961569/e617973f-e480-4f46-bc51-0237334655ba)
+![Sign-up](https://github.com/SaikrishnaRajaraman/slash/assets/88961569/392e3ee3-6e94-4840-8d90-dac8f6586731)
+![search](https://github.com/SaikrishnaRajaraman/slash/assets/88961569/967c02ec-71fc-4982-8a9b-1da12020850d)
+![results](https://github.com/SaikrishnaRajaraman/slash/assets/88961569/2125f94e-7c00-42e3-abfd-da20876c6abe)
+![wishlist](https://github.com/SaikrishnaRajaraman/slash/assets/88961569/f90b3c31-2b0c-4190-96bd-2908204130de)
+
+### Mobile App:
+
+![Sign-in-app png](https://github.com/SaikrishnaRajaraman/slash/assets/88961569/b49ae744-54a0-48b5-936b-2430da30bbba)
+![Sign-up-app png](https://github.com/SaikrishnaRajaraman/slash/assets/88961569/7a835282-a263-436e-a170-ca385eb0e869)
+![search-app](https://github.com/SaikrishnaRajaraman/slash/assets/88961569/406c6d13-6cfa-4ef0-89be-3dca308db614)
+![wishlist-app](https://github.com/SaikrishnaRajaraman/slash/assets/88961569/0534d05f-3cda-497a-9411-5b8095ba7b66)
+
+## Technologies Used
+
+- Flask
+- HTML
+- CSS
+- Bootstrap
+- Kotlin (Android Studio)
+- Firebase
+
+# Slash - Quick Start Guide
+
+1. **Getting Started**
+   - If you're a new user, start by signing up for Slash using your email and a secure password.
+   - Returning users can simply sign in by entering their previously registered email and password.
+
+2. **Comprehensive Search Results**
+   - You can search an item you are looking for in the search bar provided and a wide range of products are listed.
+   - Each item includes essential details: an image, the originating website, price, and user rating for ease of understanding.
+
+3. **Customize Your Search**
+   - Sort your results by price or rating, whether you prefer high-to-low or vice versa.
+   - Our currency filter allows you to view prices in your preferred currency, be it INR, POUND, EURO, or more.
+   - Utilize our filtering options to focus on limited items within the extensive selection.
+
+4. **Keep Track of Favorites**
+   - Simply click the "Add to Wishlist" button, and your desired items are saved for future reference.
+   - Whenever you want to check your wishlist, simply click the "Wishlist" button.
+
+5. **Seamless Web & Mobile Experience**
+   - Slash offers both a mobile app for Android and a website, ensuring you enjoy a consistent shopping experience across platforms.
+
+## All problems encountered while running the flask app
+
+- The python version had to be changed from from 3.10.5 to the python version 3.11.6
+- The pip version had to be changed from 21.3.1 to 23.2.1
+- We got an error while installing lxml “ERROR: Could not build wheels for lxml, which is required to install pyproject.toml-based projects”
+- We got an error stating “Message "note: This error originates from a subprocess, and is likely not a problem with pip" while installing requirements.txt file using pip.
+- For running flask we can use the command “python -m flask run” if “flask run” is not working. 
+
+## Case Study: User Experience Feedback for Slash
+
+This case study provides insight into a user's experience while using "Slash," a comprehensive shopping platform that includes a mobile app for Android and a corresponding website. The user, who comes from a non-CS (Computer Science) background, navigated through the platform, engaging in activities such as signing up, logging in, searching for items, applying filters, and managing a wishlist.
+
+**User Experience Highlights**
+
+**1. User Registration and Login**
+   - The user was able to successfully sign up for the service using her email and setting a password. She noted that the registration process was straightforward and user-friendly.
+   - Logging in as a returning user also posed no challenges, which indicated a smooth sign-in experience.
+
+**2. Item Search and Result Display**
+   - The user could easily search for her desired items and found the search results to be well-organized and easy to navigate.
+   - The inclusion of essential information for each item, such as images, originating websites, prices, and user ratings, was particularly appreciated.
+
+**3. Filters and Filter Application**
+   - The user found that the filters for sorting results by price and rating worked seamlessly. These filters offered clear functionality and met her expectations.
+   - The user, however, encountered difficulty understanding the purpose of the "Result Length" filter. She suggested changing the filter's name to improve its clarity and usability.
+
+**4. Filter Application Process**
+   - The user provided feedback that applying filters only after clicking the "Filter Search" button was not as intuitive as expected. She proposed a more user-friendly approach to filter application.
+
+**5. User Interface and Product Display**
+   - The user praised the user interface (UI) of the product display, finding it easy to understand and navigate. This positive feedback indicates that the design and layout of the app and website effectively cater to user needs.
+
+**6. Wishlist Feature**
+   - The user found the wishlist option to be highly useful, facilitating the organization and tracking of her favorite items.
+
+**Conclusion and Recommendations**
+
+The user's experience with the "Slash" platform was generally positive, with successful sign-up, item search, and appreciation for the UI and wishlist features. However, two important user feedback points stand out:
+
+1. **"Result Length" Filter:** To improve user comprehension, it is recommended to rename the "Result Length" filter to something more intuitive, clarifying its purpose.
+
+2. **Filter Application:** The user suggested streamlining the filter application process for enhanced user-friendliness.
+
+
+## Project Roadmap
+
+The slash app can be modified to include a percentage of discount for each product and the number of people who have rated that product.
+The slash app can include recently viewed products by the user.
+Best selling badges on the searched product scrapped from the web has been implemented, changes need to be done on UI.
+Search by category for each product.
+Include more filters for the products. Example: Colour and category filters.
+Display, offers and coupons on eligible products.
+Allow users to share the link to products on the website. (implemented in the Android App)
+Localization to be added to the website. (Implemented in the Android App)
+
+
+## License
+
+This project is open source and available under the MIT License license.
+
+---
+
+
+
 # :sparkles: Contributors
 
 - Jessica Vargas(jrvargas)
@@ -355,7 +520,13 @@ File Name: C:\Anant\NCSU\slash_test_csv\socks211104_1223.csv
 - Rushikesh Deodhar(rdeodha)
 - Saurabh Nanda(snanda)
 
+# :sparkles: Contributors (Phase-4)
+
+- Chandana Mallu (cmallu)
+- Saikrishna Rajaraman (srajara4)
+- Siddharth Anand (sanand8)
+- Tripurashree Mysore Manjunatha (tmysore)
+
 ## :email: Support
 
-
-For any queries and help, please reach out to us at: fall2021se@gmail.com
+For any queries and help, please reach out to us at: slashse2023@gmail.com
