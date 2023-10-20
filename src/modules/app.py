@@ -1,13 +1,70 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, session, jsonify
 from src.modules.scraper import driver
+
 import json
+from src.firebase_config import auth, db
 
 app = Flask(__name__, template_folder=".")
+app.secret_key = "Slash"
 
 
-@app.route("/")
+@app.route("/", methods=["POST", "GET"])
 def landingpage():
-    return render_template("./static/landing.html")
+    if request.method == "POST":
+        email = request.form.get("email")
+        password = request.form.get("password")
+        try:
+            user = auth.sign_in_with_email_and_password(email, password)
+            session['user'] = user['localId']
+            return render_template("./static/landing.html")
+        except:
+            error = "Invalid username or password. Try again"
+            return render_template("./static/signin.html", error=error)
+    else:
+        if session.get('user'):
+            return render_template("./static/landing.html")
+        else:
+            return render_template("./static/signin.html")
+
+
+# @app.route("/",methods=["POST","GET"])
+# def landingpage():
+#     if request.method == "POST" :
+#         email = request.form.get("email")
+#         password = request.form.get("password")
+#
+#         try:
+#             user = auth.sign_in_with_email_and_password(email,password)
+#             session['user'] = email
+#         except:
+#             return "Failed to Login"
+#
+#     return render_template("./static/landing.html")
+#
+#
+@app.route("/signup", methods=["POST", "GET"])
+def signup():
+    error = None
+    if request.method == "POST":
+        email = request.form.get("email")
+        password = request.form.get("password")
+        confirm_password = request.form.get('confirmpassword')
+        if email and password and confirm_password:
+            if password != confirm_password:
+                error = 'Invalid username or password. Please try again!'
+                return render_template("./static/signup.html", error=error)
+            try:
+                user = auth.create_user_with_email_and_password(email, password)
+                session['user'] = user['localId']
+                return render_template("./static/landing.html")
+            except:
+                error = "Invalid username or password. Try again"
+                return render_template("./static/signup.html", error=error)
+        else:
+            error = "Invalid email/password"
+            return render_template("./static/signin.html", error=error)
+    else:
+        return render_template("./static/signup.html")
 
 
 @app.route("/search", methods=["POST", "GET"])
@@ -15,15 +72,21 @@ def product_search(new_product="", sort=None, currency=None, num=None):
     product = request.args.get("product_name")
     if product == None:
         product = new_product
-
-    data = driver(product, currency, num, 0, False, None, True, sort)
+    isRestApi = request.headers.get('Content-Type', '') == 'application/json'
+    data = driver(product, currency, num, 0, False, None, True, sort, isRestApi)
+    if isRestApi:
+        return jsonify(data)
 
     return render_template("./static/result.html", data=data, prod=product)
 
 
+@app.route("/wishlist", methods=["POST", "GET"])
+def product_wishlist():
+    wishlists = db.child("wishlists").child(session.get('user')).get()
+    return render_template("./static/wishlist.html", data=wishlists.val().values())
+
 @app.route("/filter", methods=["POST", "GET"])
 def product_search_filtered():
-
     product = request.args.get("product_name")
     sort = request.form["sort"]
     currency = request.form["currency"]

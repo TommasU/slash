@@ -131,3 +131,10 @@ dmypy.json
 
 *.csv
 user_data.json
+
+.DS_Store
+
+.idea
+.vercel
+
+.vscode
