@@ -21,7 +21,7 @@ EXCHANGES = literal_eval(requests.get(CURRENCY_URL).text)
 
 
 def formatResult(
-    website, titles, prices, links, ratings, num_ratings, trending, df_flag, currency,image_tag = ""
+        website, titles, prices, links, ratings, num_ratings, trending, df_flag, currency, image_tag=""
 ):
     """
     The formatResult function takes the scraped HTML as input, and extracts the
@@ -33,7 +33,7 @@ def formatResult(
     Returns: A dictionary of all the parameters stated above for the product
     """
 
-    title, price, link, rating, num_rating, converted_cur, trending_stmt,image_url = (
+    title, price, link, rating, num_rating, converted_cur, trending_stmt, image_url = (
         "",
         "",
         "",
@@ -46,11 +46,17 @@ def formatResult(
     if titles:
         title = titles[0].get_text().strip()
     if prices:
-        price = prices[0].get_text().strip()
+        if website == "walmart":
+            price = prices[0].select(".w_iUH7")[0].get_text().replace("current price ", "").strip()
+        else:
+            price = prices[0].get_text().strip()
     if "$" not in price:
         price = "$" + price
     if links:
         link = links[0]["href"]
+        if not link.startswith("http"):
+            link = f'http://www.{website}.com{link}'
+
     if ratings:
         rating = float(ratings[0].get_text().strip().split()[0])
     if trending:
@@ -78,7 +84,7 @@ def formatResult(
         "timestamp": datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
         "title": title,
         "price": price,
-        "link": f"www.{website}.com{link}",
+        "link": f"{link}",
         "website": website,
         "rating": rating,
         "no of ratings": num_rating,
@@ -146,27 +152,27 @@ def getCurrency(currency, price):
     if len(price) > 1:
         if currency == "inr":
             converted_cur = EXCHANGES["rates"]["INR"] * int(
-                price[(price.index("$") + 1) : price.index(".")].replace(",", "")
+                price[(price.index("$") + 1): price.index(".")].replace(",", "")
             )
         elif currency == "euro":
             converted_cur = EXCHANGES["rates"]["EUR"] * int(
-                price[(price.index("$") + 1) : price.index(".")].replace(",", "")
+                price[(price.index("$") + 1): price.index(".")].replace(",", "")
             )
         elif currency == "aud":
             converted_cur = EXCHANGES["rates"]["AUD"] * int(
-                price[(price.index("$") + 1) : price.index(".")].replace(",", "")
+                price[(price.index("$") + 1): price.index(".")].replace(",", "")
             )
         elif currency == "yuan":
             converted_cur = EXCHANGES["rates"]["CNY"] * int(
-                price[(price.index("$") + 1) : price.index(".")].replace(",", "")
+                price[(price.index("$") + 1): price.index(".")].replace(",", "")
             )
         elif currency == "yen":
             converted_cur = EXCHANGES["rates"]["JPY"] * int(
-                price[(price.index("$") + 1) : price.index(".")].replace(",", "")
+                price[(price.index("$") + 1): price.index(".")].replace(",", "")
             )
         elif currency == "pound":
             converted_cur = EXCHANGES["rates"]["GBP"] * int(
-                price[(price.index("$") + 1) : price.index(".")].replace(",", "")
+                price[(price.index("$") + 1): price.index(".")].replace(",", "")
             )
         converted_cur = currency.upper() + " " + str(round(converted_cur, 2))
     return converted_cur

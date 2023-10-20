@@ -31,6 +31,7 @@ def main():
         default="F",
     )
     parser.add_argument("--search", type=str, help="Product search query")
+    parser.add_argument("--wishlist", type=str, help="Product wishlist query")
     parser.add_argument("--num", type=int, help="Maximum number of records", default=3)
     parser.add_argument(
         "--sort",
@@ -62,6 +63,7 @@ def main():
         help="Display the amount in specified currency(inr, euro, aud, yuan, yen, pound)",
     )
     args = parser.parse_args()
+    print(args)
 
     if args.full == "T":
 
