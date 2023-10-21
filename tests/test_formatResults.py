@@ -20,7 +20,7 @@ def test_formatResults():
     links = []
 
     product = formatter.formatResult(
-        "example", titles, prices, links, "", 0, "", None, None
+        "example", titles, prices, links, "", 0, "", None, None, None
     )
     ans = {"title": "title", "price": "$0.99", "website": "example"}
     print(product["website"], ans["website"])
