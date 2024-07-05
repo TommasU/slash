@@ -3,7 +3,6 @@
 Scrapes the most popular e-commerce websites to get the best deals on searched items across these websites. 
 - **Fast**: With DealHunt, you can save over 50% of your time by comparing deals across websites within seconds
 - **Easy**: DealHunt uses very easy commands to filter, sort and search your items
--
 
 # :rocket: Quick Guide
 
@@ -15,7 +14,7 @@ Scrapes the most popular e-commerce websites to get the best deals on searched i
  ```
  * Finally, ```cd``` into the local repository.
 ```
-cd slash
+cd DealHunt
 ```
 2. Install the ```requirements.txt```. 
 - This project uses Python 3, so make sure that [Python](https://www.python.org/downloads/) and [Pip](https://pip.pypa.io/en/stable/installation/) are preinstalled.
@@ -89,6 +88,6 @@ flask run
 
 :thought_balloon: Use Case
 ---
-* ***Students***: Students coming to university are generally on a budget and time constraint and generally spend hours wasting time to search for products on Websites. Slash is the perfect tool for these students that slashes all the unnecessary details on a website and helps them get prices for a product across multiple websites.Make the most of this tool in the upcoming Black Friday Sale.
+* ***Students***: Students coming to university are generally on a budget and time constraint and generally spend hours wasting time to search for products on Websites. DealHunt is the perfect tool for these students that slashes all the unnecessary details on a website and helps them get prices for a product across multiple websites.Make the most of this tool in the upcoming Black Friday Sale.
 * ***Data Analysts***: Finding data for any project is one of the most tedious job for a data analyst, and the datasets found might not be the most recent one. Using slash, they can create their own dataset in real time and format it as per their needs so that they can focus on what is actually inportant.
 
